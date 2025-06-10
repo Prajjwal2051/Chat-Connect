@@ -51,11 +51,12 @@ def client_handler(client):
         username=client.recv(2048).decode('utf-8')
         if username!="":
             active_clients.append((username,client))
-            break    #adding their username and also object which will be useful for carrying out future operations
+            break                                       #adding their username and also object which will be useful for carrying out future operations
         else:
             print("Client username cannot be empty !")
 
-        threading.Thread(target=listen_for_messages,args=(username,client,)).start()
+    
+    threading.Thread(target=listen_for_messages,args=(username,client,)).start()
         
 # main fucntion
 def main():
