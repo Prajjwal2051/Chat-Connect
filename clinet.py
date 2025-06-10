@@ -15,6 +15,7 @@ def listen_for_messages_from_server(client):
             print(f"{username}\n{content}")
         else:
             print("Server sent an empty message")
+            exit(0)
 
 # now the function for client to send the message
 def send_message_to_server(client):

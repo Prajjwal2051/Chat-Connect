@@ -20,8 +20,7 @@ here we are using the client object we get from the server.accept()
 
 # creating a function to send message to client
 def send_message_to_client(client,message):
-    client.sendall(message.encode())
-    print(message)    #using the client object there is a method to send all the message and we have to encode also the message
+    client.sendall(message.encode())    #using the client object there is a method to send all the message and we have to encode also the message
 
 # function to send any new message to all the client that are connected to the server
 def send_messages_to_all(client,message):
