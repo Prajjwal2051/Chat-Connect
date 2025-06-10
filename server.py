@@ -23,7 +23,7 @@ def send_message_to_client(client, message):
     try:
         client.sendall(message.encode())
     except Exception as e:
-        print(f"[!] Error sending message to client: {e}")
+        print(f"[Error] Could not send message to a client: {e}")
 
 # function to send any new message to all the client that are connected to the server
 def send_messages_to_all(sender_client, message):
@@ -41,12 +41,12 @@ def listen_for_messages(username, client):
             # and checking if the message is empty or not
             if response:
                 final_msg = f"{username} : {response}"
-                print(f"\033[92m[Message]\033[0m {final_msg}")
+                print(f"[Message] {username}: {response}")
                 send_messages_to_all(client, final_msg)    #calling the send message to all function 
             else:
-                print(f"\033[93m[Warning]\033[0m Empty message from {username}.")
-        except Exception as e:
-            print(f"\033[91m[Disconnected]\033[0m {username} has left the chat.")
+                print(f"[Warning] Empty message from {username}.")
+        except Exception:
+            print(f"[Disconnected] {username} has left the chat.")
             active_clients[:] = [user for user in active_clients if user[1] != client]
             client.close()
             break
@@ -60,12 +60,12 @@ def client_handler(client):
             username = client.recv(2048).decode('utf-8')
             if username:
                 active_clients.append((username, client))
-                print(f"\033[94m[Connected]\033[0m {username} joined the chat.")
+                print(f"[Connected] {username} joined the chat.")
                 break                                       #adding their username and also object which will be useful for carrying out future operations
             else:
-                print("\033[93m[Warning]\033[0m Client username cannot be empty!")
+                print("[Warning] Client username cannot be empty!")
         except Exception as e:
-            print(f"\033[91m[Error]\033[0m Error receiving username: {e}")
+            print(f"[Error] Error receiving username: {e}")
             client.close()
             return
     threading.Thread(target=listen_for_messages, args=(username, client), daemon=True).start()
@@ -78,7 +78,7 @@ def main():
     
     '''
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-    print("\033[96m[Server]\033[0m Starting server...")
+    print("[Server] Starting server...")
 
     # now creating a try and catch block
 
@@ -87,9 +87,9 @@ def main():
         now we need to provide the address to the server in the form of hostip and which port it is going to use
         '''
         server.bind((HOST, PORT))
-        print(f"\033[96m[Server]\033[0m Running at {HOST}:{PORT}")
+        print(f"[Server] Running at {HOST}:{PORT}")
     except Exception as e:
-        print(f"\033[91m[Error]\033[0m Unable to bind to {HOST}:{PORT} - {e}")
+        print(f"[Error] Unable to bind to {HOST}:{PORT} - {e}")
         return
 
     '''
@@ -97,20 +97,20 @@ def main():
     computer so we will set the limit how many clinet can connect to our server at a time 
     '''
     server.listen(LISTENER_LIMIT)
-    print(f"\033[96m[Server]\033[0m Listening for connections (limit: {LISTENER_LIMIT})...")
+    print(f"[Server] Listening for connections (limit: {LISTENER_LIMIT})...")
 
     ''' now we will create a while loop that will continously listen to clinet connections'''
 
     while True:
         try:
             client, address = server.accept()  # we created two varaibles that contain the clinet socket using and what is the address of it
-            print(f"\033[92m[New Connection]\033[0m {address[0]}:{address[1]}")
+            print(f"[New Connection] {address[0]}:{address[1]}")
             threading.Thread(target=client_handler, args=(client,), daemon=True).start()
         except KeyboardInterrupt:
-            print("\n\033[91m[Server]\033[0m Shutting down.")
+            print("\n[Server] Shutting down.")
             break
         except Exception as e:
-            print(f"\033[91m[Error]\033[0m {e}")
+            print(f"[Error] {e}")
 
 if __name__ == "__main__":
     main()
