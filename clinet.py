@@ -12,10 +12,10 @@ def listen_for_messages_from_server(client):
         if message!="":
             username=message.split(" : ")[0]
             content=message.split(" : ")[1]
-            print(f"{username}\n{content}")
+            print(f"{username}: {content}")
         else:
             print("Server sent an empty message")
-            exit(0)
+            break
 
 # now the function for client to send the message
 def send_message_to_server(client):
@@ -25,6 +25,7 @@ def send_message_to_server(client):
             client.sendall(message.encode())
         else:
             print("Empty Message")
+            break
 
 def communicate_to_server(client):
     username=input("Enter your Username: ")

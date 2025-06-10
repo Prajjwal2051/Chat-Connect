@@ -40,6 +40,7 @@ def listen_for_messages(username,client):
             send_messages_to_all(client,final_msg)    #calling the send message to all function 
         else:
             print(f"Message from {username} is empty !")
+            break;
 
 
 def client_handler(client):
