@@ -17,6 +17,7 @@ def listen_for_messages_from_server(client):
                     print(f"\n[Server] {message}")
             else:
                 print("\n[Warning] Server sent an empty message.")
+                break
         except Exception:
             print("\n[Disconnected] Lost connection to server.")
             client.close()
