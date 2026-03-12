@@ -1,0 +1,8 @@
+# Chat-Connect — Python dependency list
+# Original Creator : Prajjwal  |  © 2025
+#
+# This project uses the Python standard library only — no third-party packages required.
+# Minimum Python version: 3.8
+#
+# stdlib modules used:
+#   socket, threading, time, re, logging, signal, sys, os, argparse, getpass, datetime
