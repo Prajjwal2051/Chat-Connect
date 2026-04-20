@@ -36,6 +36,11 @@ Slash commands:
     /quit              Disconnect and exit
 """
 
+import utils.net
+import utils.clients
+import utils.http_session
+import utils.transport
+import utils.session
 import socket
 import threading
 import sys
